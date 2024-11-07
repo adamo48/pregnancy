@@ -15,9 +15,6 @@ def cost_ginecologist():
     price_medicover = price_medicover.text
     price_medicover = price_medicover.replace('\n',''). replace(' ','').replace('od','').replace('zł','').replace(',','.')
     price_medicover = float(price_medicover)
-    # with open('output.html', 'w') as file:
-    #     file.write(response.text)
-
     return price_medicover
     #ciaza na medicover, wiecej pieniedzy, ale bardziej rozbudowany
     #na NFZ za darmo przy prawidlowym przebiegu
