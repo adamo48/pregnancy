@@ -1,23 +1,22 @@
 import requests
 from bs4 import BeautifulSoup
+#from string import ascii_letters
 
 def main():
     print(cost_ginecologist())
 ...
 def cost_ginecologist():
     # pakiet medyczny sredni koszt
-    from string import ascii_letters
     luxmed="https://www.luxmed.pl/dla-pacjenta/abonamenty/abonamenty-dla-doroslych-i-dzieci/pakiet-kompleksowy-zloty"
     headers = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko)' 'Chrome/41.0.2227.1 Safari/537.36'}
     responsee = requests.get(luxmed, headers=headers)
     soupo = BeautifulSoup(responsee.text, "html.parser")
     cena = soupo.find("div", class_="details__price")
     cena = cena.text
-    cena = cena.replace(" ", "")
-    cena = cena.strip(ascii_letters)
-    cena = cena.replace("zÅ", "")
+    cena = cena.replace("zÅ\x82", "").replace("Cena od ", "")
+    cena = float(cena)
    # if cena:
-    print("Cena pakietu luxmed:", cena)
+    #print("Cena pakietu luxmed:", cena)
     #else:
             #print("Nie znaleziono ceny.")
     # ciaza na luxmed, mniejszy pakiet
@@ -28,7 +27,7 @@ def cost_ginecologist():
     price_medicover = price_medicover.text
     price_medicover = price_medicover.replace('\n',''). replace(' ','').replace('od','').replace('zł','').replace(',','.')
     price_medicover = float(price_medicover)
-    return price_medicover
+    return price_medicover, cena
     #ciaza na medicover, wiecej pieniedzy, ale bardziej rozbudowany
     #na NFZ za darmo przy prawidlowym przebiegu
 def cost_prenatal_tests():
