@@ -1,11 +1,12 @@
 import requests
 from bs4 import BeautifulSoup
 from tools import *
+import re
 #from string import ascii_letters
 
 def main():
    #print(cost_ginecologist())
-    print(cost_labour())
+    print(cost_supplements())
 def cost_ginecologist():
     # pakiet medyczny sredni koszt
     luxmed="https://www.luxmed.pl/dla-pacjenta/abonamenty/abonamenty-dla-doroslych-i-dzieci/pakiet-kompleksowy-zloty"
@@ -42,8 +43,27 @@ def cost_prenatal_tests():
     price = price.replace(',','.').replace(' ','').replace('PLN','')
     price = float(price)
     return price
+
 def cost_supplements():
-    pass
+    iron_ = Supplements(iron)
+    iron_.fetch_price()
+    iron_.price = iron_.price*3
+    folic = Supplements(folic_acid)
+    folic.fetch_price()
+    folic.price = folic.price*3
+    wit = Supplements(witD)
+    wit.fetch_price()
+    wit.price = wit.price*6
+    dHa = Supplements(dha)
+    dHa.fetch_price()
+    dHa.price = dHa.price*6
+    jod_1 = Supplements(jod1)
+    jod_1.fetch_price()
+    jod_1.price = jod_1.price*3
+    jod_2 = Supplements(jod2)
+    jod_2.fetch_price()
+    jod_2.price = jod_2.price*6
+    return iron_.price + folic.price + wit.price + dHa.price + jod_1.price + jod_2.price
     # zalecane suplementy
 def cost_labour():
     private_natural_labour_cost = 9015
