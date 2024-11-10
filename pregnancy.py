@@ -1,10 +1,11 @@
 import requests
 from bs4 import BeautifulSoup
+from tools import *
 #from string import ascii_letters
 
 def main():
-    print(cost_ginecologist())
-...
+   #print(cost_ginecologist())
+    print(cost_labour())
 def cost_ginecologist():
     # pakiet medyczny sredni koszt
     luxmed="https://www.luxmed.pl/dla-pacjenta/abonamenty/abonamenty-dla-doroslych-i-dzieci/pakiet-kompleksowy-zloty"
@@ -45,10 +46,38 @@ def cost_supplements():
     pass
     # zalecane suplementy
 def cost_labour():
-    pass
+    private_natural_labour_cost = 9015
+    private_emperors_cut_cost = 6245
+    nfz_cost = 0
+    labour_financing_type = get_labour_financing_type()
+    if labour_financing_type == 'nfz':
+
+        labour_type = get_labour_type()
+        nfz_options = {
+        1: {'description': 'Dodatkowa opieka położnej', 'price': 1500},
+        2: {'description': 'Dopłata do sali rodzinnej lub jednoosobowej o podwyższonym standardzie', 'price': 500},
+        3: {'description': 'Obecność osoby bliskiej przy cięciu cesarskim', 'price': 200},
+        4: {'description': 'Dodatkowa opieka lekarza przy porodzie', 'price': 2000}
+    }
+        display_nfz_options(nfz_options)
+        selected_nfz_options = get_user_selection(nfz_options)
+
+        nfz_addons_cost = calculate_nfz_addons_cost(selected_nfz_options, nfz_options)
+        nfz_cost += nfz_addons_cost
+        return nfz_cost
+    
+    labour_type = get_labour_type()
+    if labour_type == 'natura':
+        return private_natural_labour_cost
+    elif labour_type == 'cc':
+        return private_emperors_cut_cost
+    
     # cost of different painreliefs
     # cost of private labour
+    
     # cost of nfz labour
+    
+
 
 if __name__ == "__main__":
     main()
