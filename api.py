@@ -15,7 +15,7 @@ for x in range(11):
 headers = {
     'X-ClientId': 'qSWq2WGJXOVsxXFcn8IJ8DYobLAbEMC73IBynhwf3RM='  # Twój klucz API
 }
-
+d
 
 params = {
     'format': 'json',  # Format odpowiedzi
