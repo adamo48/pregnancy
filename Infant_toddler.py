@@ -5,25 +5,20 @@ class Child_budget:
 
     def add_expenses(self, category, cost):
         category = str(category)
-        self.expenses[category] = cost   
+        self.expenses[category] = cost  
 
-    def total_expenses(self):
-        return sum(self.expenses.values())
+    def __str__(self):     
+        return (f"{self.expenses.items()}, total:{self.expenses.values()}")
+  
 
-    def __str__(self):
-        return f"{self.stage}: {self.expenses}. Total: {self.expenses}"
-        
-# infant((0-)wyprawka, pieluchy, mleko, butelki, smoczek, ubranka, zabawki, żłobek
-# toddler(3-6) zabawki, jedzenie, żłobek/przedszkole, ubrania   
-#child(7-12) hobby, zabawki, jedzenie, ubrania, szkolne wydatki
-#teen(13-18) hobby, jedzenie, ubrania, szkolne wydatki
+
 
 #infant = Child_budget("Niemowlę")        
 #infant.add_expenses("Pieluchy", 100)
 #infant.add_expenses("Mleko", 500)
 #print(infant)
 
-#wyposażenie noworodka: 
+#wyprawka noworodka: 
 newborn = {"crib":720,
 "materace":270,
 "przewijak":170,
@@ -84,6 +79,9 @@ teen = {
 
 }
 infant = Child_budget("Niemowlę")  
-for i in newborn:      
-    infant.add_expenses(newborn.keys(), newborn.values())
-print(infant)
+for keys, values in newborn.items():      
+    infant.add_expenses({keys},{values})
+for key, value in newborn.items():  
+     print(f"{key}: {value}")
+print(f"Total:{sum(newborn.values())}")        
+     
