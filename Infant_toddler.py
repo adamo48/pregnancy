@@ -11,13 +11,6 @@ class Child_budget:
         return (f"{self.expenses.items()}, total:{self.expenses.values()}")
   
 
-
-
-#infant = Child_budget("Niemowlę")        
-#infant.add_expenses("Pieluchy", 100)
-#infant.add_expenses("Mleko", 500)
-#print(infant)
-
 #wyprawka noworodka: 
 newborn = {"crib":720,
 "materace":270,
@@ -78,10 +71,97 @@ teen = {
     "food" : 30000
 
 }
-infant = Child_budget("Niemowlę")  
-for keys, values in newborn.items():      
-    infant.add_expenses({keys},{values})
-for key, value in newborn.items():  
-     print(f"{key}: {value}")
-print(f"Total:{sum(newborn.values())}")        
+#infant = Child_budget("Niemowlę")  
+#for keys, values in newborn.items():      
+#    infant.add_expenses({keys},{values})
+#for key, value in newborn.items():  
+#     print(f"{key}: {value}")
+#print(f"Total:{sum(newborn.values())}")        
      
+
+def calc_newborn():
+    infant = Child_budget("Niemowlę")  
+    for keys, values in newborn.items():      
+        infant.add_expenses({keys},{values})
+    for key, value in newborn.items():  
+        print(f"{key}: {value}")
+    return (f"Total:{sum(newborn.values())}") 
+
+def calc_toddler():
+    small_child = Child_budget("Niemowlę")  
+    for keys, values in toddler.items():      
+        small_child.add_expenses({keys},{values})
+    for key, value in toddler.items():  
+        print(f"{key}: {value}")
+    return (f"Total:{sum(toddler.values())}")
+
+def calc_older_toddler():
+    small_child_2 = Child_budget("Niemowlę")  
+    for keys, values in older_toddler.items():      
+        small_child_2.add_expenses({keys},{values})
+    for key, value in older_toddler.items():  
+        print(f"{key}: {value}")
+    return (f"Total:{sum(older_toddler.values())}") 
+
+def calc_preschool():
+    preschooler = Child_budget("Niemowlę")  
+    for keys, values in preschool.items():      
+        preschooler.add_expenses({keys},{values})
+    for key, value in preschool.items():  
+        print(f"{key}: {value}")
+    return (f"Total:{sum(preschool.values())}") 
+
+def calc_child():
+    a_child = Child_budget("Niemowlę")  
+    for keys, values in child.items():      
+        a_child.add_expenses({keys},{values})
+    for key, value in child.items():  
+        print(f"{key}: {value}")
+    return (f"Total:{sum(child.values())}")
+
+def calc_teen():
+    teenager = Child_budget("Niemowlę")  
+    for keys, values in teen.items():      
+        teenager.add_expenses({keys},{values})
+    for key, value in teen.items():  
+        print(f"{key}: {value}")
+    return (f"Total:{sum(teen.values())}")    
+        
+stage_of_child = input("Do you currently have a child?").lower()
+if stage_of_child=="yes":
+    what_stage=int(input("Input age of a child in years"))
+    if what_stage<1:
+            print(calc_newborn())
+            print(calc_toddler())
+            print(calc_older_toddler())
+            print(calc_preschool())
+            print(calc_child())
+            print(calc_teen())
+    elif 0<what_stage<4:
+            print(calc_toddler())
+            print(calc_older_toddler())
+            print(calc_preschool())
+            print(calc_child())
+            print(calc_teen())    
+    elif 3<what_stage<7:
+            print(calc_preschool())
+            print(calc_child())
+            print(calc_teen())
+    elif 6<what_stage<13:
+            print(calc_child())
+            print(calc_teen())
+    else:
+            print(calc_teen())               
+elif stage_of_child=="no": 
+            print(calc_newborn())
+            print(calc_toddler())
+            print(calc_older_toddler())
+            print(calc_preschool())
+            print(calc_child())
+            print(calc_teen())
+           # z= {sum(teen.values())}+{sum(child.values())}
+            #print(f"Total:{z}")    
+
+
+
+    
