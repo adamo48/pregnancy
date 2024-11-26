@@ -26,15 +26,16 @@ params = {
 def get_inflation(list_url):
     another_list = []
     for url in list_url:
-         response = requests.get(url)
-         if response.status_code == 200:
+        response = requests.get(url)
+        if response.status_code == 200:
             data = response.json()
-            target_row = next((row for row in data["data"] if row["rownumber"] == 1), None)
-            if target_row:
+            if target_row:= next((row for row in data["data"] if row["rownumber"] == 1), None):
                     t = float(target_row["wartosc"])-100
                     another_list.append(t)
             else:
-                    return("Nie znaleziono wskaźnika.")    
+                 return("Błąd strony")        
+        else:
+            return("Nie znaleziono wskaźnika.")    
     return(sum(another_list)/10)
 if __name__ == "__main__":
      main()    
