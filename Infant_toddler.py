@@ -12,13 +12,15 @@ class Child_budget:
   
 
 #wyprawka noworodka: 
-newborn = {"crib":720,
-"materace":270,
-"przewijak":170,
-"wózek_fotelik":3500,
-"pościel":85,
-"pieluchy_tetrowe":25,
-"kocyki":75}
+newborn = {
+    "crib" : 720,
+    "mattress" : 270,
+    "changing_table" : 170,
+    "stroller_set" : 3500,
+    "linen" : 85,
+    "cloth_diapers" : 25,
+    "blanket" : 75
+    }
 #Niemowlę(0-12) 
 toddler = {
     "nappies" : 2400,
@@ -80,87 +82,125 @@ teen = {
      
 
 def calc_newborn():
-    infant = Child_budget("Niemowlę")  
+    infant = Child_budget("Newborn")  
     for keys, values in newborn.items():      
         infant.add_expenses({keys},{values})
     for key, value in newborn.items():  
         print(f"{key}: {value}")
-    return (f"Total:{sum(newborn.values())}") 
+    total_newborn = sum(newborn.values())
+    return total_newborn
 
 def calc_toddler():
-    small_child = Child_budget("Niemowlę")  
+    small_child = Child_budget("Toddler")  
     for keys, values in toddler.items():      
         small_child.add_expenses({keys},{values})
     for key, value in toddler.items():  
         print(f"{key}: {value}")
-    return (f"Total:{sum(toddler.values())}")
+    total_toddler = sum(toddler.values())
+    return total_toddler
 
 def calc_older_toddler():
-    small_child_2 = Child_budget("Niemowlę")  
+    small_child_2 = Child_budget("Toddler 4-6")  
     for keys, values in older_toddler.items():      
         small_child_2.add_expenses({keys},{values})
     for key, value in older_toddler.items():  
         print(f"{key}: {value}")
-    return (f"Total:{sum(older_toddler.values())}") 
+    total_older_toddler = sum(older_toddler.values())
+    return total_older_toddler 
 
 def calc_preschool():
-    preschooler = Child_budget("Niemowlę")  
+    preschooler = Child_budget("Preschooler")  
     for keys, values in preschool.items():      
         preschooler.add_expenses({keys},{values})
     for key, value in preschool.items():  
         print(f"{key}: {value}")
-    return (f"Total:{sum(preschool.values())}") 
+    total_preschool = sum(preschool.values())
+    return total_preschool 
 
 def calc_child():
-    a_child = Child_budget("Niemowlę")  
+    a_child = Child_budget("Child")  
     for keys, values in child.items():      
         a_child.add_expenses({keys},{values})
     for key, value in child.items():  
         print(f"{key}: {value}")
-    return (f"Total:{sum(child.values())}")
+    total_child = sum(child.values())
+    return total_child
 
 def calc_teen():
-    teenager = Child_budget("Niemowlę")  
+    teenager = Child_budget("Teenager")  
     for keys, values in teen.items():      
         teenager.add_expenses({keys},{values})
     for key, value in teen.items():  
         print(f"{key}: {value}")
-    return (f"Total:{sum(teen.values())}")    
-        
-stage_of_child = input("Do you currently have a child?").lower()
+    total_teen = sum(teen.values())
+    return total_teen
+
+stage_of_child = input("Do you currently have a child? Type yes|no ").lower()
+private=input("Do you want to calculate cost of private schools? Type yes|no ").lower()
 if stage_of_child=="yes":
-    what_stage=int(input("Input age of a child in years"))
+    what_stage=int(input("Input age of a child in years: "))
     if what_stage<1:
-            print(calc_newborn())
-            print(calc_toddler())
-            print(calc_older_toddler())
-            print(calc_preschool())
-            print(calc_child())
-            print(calc_teen())
+        if private =="yes":
+            del preschool["public_preschool"]
+            del child["public_school"]
+            del teen["public_school"]
+            print(f'Total: {calc_newborn()+calc_toddler()+calc_older_toddler()+calc_preschool()+calc_child()+calc_teen()}')
+        else:
+            del preschool["private_preschool"]
+            del child["private_school"]
+            del teen["private_school"]
+            print(calc_newborn()+calc_toddler()+calc_older_toddler()+calc_preschool()+calc_child()+calc_teen())
     elif 0<what_stage<4:
-            print(calc_toddler())
-            print(calc_older_toddler())
-            print(calc_preschool())
-            print(calc_child())
-            print(calc_teen())    
+        if private =="yes":
+            del preschool["public_preschool"]
+            del child["public_school"]
+            del teen["public_school"]
+            print(calc_toddler()+calc_older_toddler()+calc_preschool()+calc_child()+calc_teen())
+        else:
+            del preschool["private_preschool"]
+            del child["private_school"]
+            del teen["private_school"]
+            print(calc_toddler()+calc_older_toddler()+calc_preschool()+calc_child()+calc_teen())
     elif 3<what_stage<7:
-            print(calc_preschool())
-            print(calc_child())
-            print(calc_teen())
+        if private =="yes":
+            del preschool["public_preschool"]
+            del child["public_school"]
+            del teen["public_school"]
+            print(calc_older_toddler()+calc_preschool()+calc_child()+calc_teen())
+        else:
+            del preschool["private_preschool"]
+            del child["private_school"]
+            del teen["private_school"]
+            print(calc_older_toddler()+calc_preschool()+calc_child()+calc_teen())
     elif 6<what_stage<13:
-            print(calc_child())
+        if private =="yes":
+            del child["public_school"]
+            del teen["public_school"]
+            print(calc_newborn()+calc_toddler()+calc_older_toddler()+calc_preschool()+calc_child()+calc_teen())
+        else:
+            del child["private_school"]
+            del teen["private_school"]
+            print(calc_child()+calc_teen())
+    elif 12<what_stage<19:
+        if private =="yes":
+            del teen["public_school"]
             print(calc_teen())
-    else:
+        else:
+            del teen["private_school"]
             print(calc_teen())               
-elif stage_of_child=="no": 
-            print(calc_newborn())
-            print(calc_toddler())
-            print(calc_older_toddler())
-            print(calc_preschool())
-            print(calc_child())
-            print(calc_teen())
-           # z= {sum(teen.values())}+{sum(child.values())}
-            #print(f"Total:{z}")    
+elif stage_of_child == "no":
+    if private =="yes":
+            del preschool["public_preschool"]
+            del child["public_school"]
+            del teen["public_school"]
+            print(f'Total: {calc_newborn()+calc_toddler()+calc_older_toddler()+calc_preschool()+calc_child()+calc_teen()}')
+    else:
+            del preschool["private_preschool"]
+            del child["private_school"]
+            del teen["private_school"]
+            print(calc_newborn()+calc_toddler()+calc_older_toddler()+calc_preschool()+calc_child()+calc_teen())
+           
+        
 
 
 
