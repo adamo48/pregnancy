@@ -1,3 +1,7 @@
+from api import get_inflation, get_url
+inflation = get_inflation(get_url())
+inflation = float(inflation)/100
+print(inflation)
 class Child_budget:
     def __init__(self, stage):
         self.stage = stage
@@ -82,12 +86,15 @@ teen = {
      
 
 def calc_newborn():
+
     infant = Child_budget("Newborn")  
     for keys, values in newborn.items():      
         infant.add_expenses({keys},{values})
     for key, value in newborn.items():  
         print(f"{key}: {value}")
     total_newborn = sum(newborn.values())
+    years = 1
+    total_newborn*=(1+inflation)**years
     return total_newborn
 
 def calc_toddler():
@@ -97,6 +104,8 @@ def calc_toddler():
     for key, value in toddler.items():  
         print(f"{key}: {value}")
     total_toddler = sum(toddler.values())
+    years = 1
+    total_toddler*=(1+inflation)**years
     return total_toddler
 
 def calc_older_toddler():
@@ -106,6 +115,8 @@ def calc_older_toddler():
     for key, value in older_toddler.items():  
         print(f"{key}: {value}")
     total_older_toddler = sum(older_toddler.values())
+    years = 2
+    total_older_toddler*=(1+inflation)**years
     return total_older_toddler 
 
 def calc_preschool():
@@ -115,6 +126,8 @@ def calc_preschool():
     for key, value in preschool.items():  
         print(f"{key}: {value}")
     total_preschool = sum(preschool.values())
+    years = 3
+    total_preschool*=(1+inflation)**years
     return total_preschool 
 
 def calc_child():
@@ -124,6 +137,8 @@ def calc_child():
     for key, value in child.items():  
         print(f"{key}: {value}")
     total_child = sum(child.values())
+    years = 6
+    total_child*=(1+inflation)**years
     return total_child
 
 def calc_teen():
@@ -133,8 +148,11 @@ def calc_teen():
     for key, value in teen.items():  
         print(f"{key}: {value}")
     total_teen = sum(teen.values())
+    years = 5
+    total_teen*=(1+inflation)**years
     return total_teen
 
+    
 stage_of_child = input("Do you currently have a child? Type yes|no ").lower()
 private=input("Do you want to calculate cost of private schools? Type yes|no ").lower()
 if stage_of_child=="yes":
@@ -144,64 +162,66 @@ if stage_of_child=="yes":
             del preschool["public_preschool"]
             del child["public_school"]
             del teen["public_school"]
-            print(f'Total: {calc_newborn()+calc_toddler()+calc_older_toddler()+calc_preschool()+calc_child()+calc_teen()}')
+            print(f"Total cost with inflation throught years until 18: {calc_newborn()+calc_toddler()+calc_older_toddler()+calc_preschool()+calc_child()+calc_teen():.2f} PLN")
+
         else:
             del preschool["private_preschool"]
             del child["private_school"]
             del teen["private_school"]
-            print(calc_newborn()+calc_toddler()+calc_older_toddler()+calc_preschool()+calc_child()+calc_teen())
+            print(f"Total cost with inflation throught years until 18: {calc_newborn()+calc_toddler()+calc_older_toddler()+calc_preschool()+calc_child()+calc_teen():.2f} PLN")
     elif 0<what_stage<4:
         if private =="yes":
             del preschool["public_preschool"]
             del child["public_school"]
             del teen["public_school"]
-            print(calc_toddler()+calc_older_toddler()+calc_preschool()+calc_child()+calc_teen())
+            print(f"Total cost with inflation throught years until 18: {calc_older_toddler()+calc_preschool()+calc_child()+calc_teen():.2f} PLN")
         else:
             del preschool["private_preschool"]
             del child["private_school"]
             del teen["private_school"]
-            print(calc_toddler()+calc_older_toddler()+calc_preschool()+calc_child()+calc_teen())
+            print(f"Total cost with inflation throught years until 18: {calc_older_toddler()+calc_preschool()+calc_child()+calc_teen():.2f} PLN")
     elif 3<what_stage<7:
         if private =="yes":
             del preschool["public_preschool"]
             del child["public_school"]
             del teen["public_school"]
-            print(calc_older_toddler()+calc_preschool()+calc_child()+calc_teen())
+            print(f"Total cost with inflation throught years until 18: {calc_preschool()+calc_child()+calc_teen():.2f} PLN")
         else:
             del preschool["private_preschool"]
             del child["private_school"]
             del teen["private_school"]
-            print(calc_older_toddler()+calc_preschool()+calc_child()+calc_teen())
+            print(f"Total cost with inflation throught years until 18: {calc_preschool()+calc_child()+calc_teen():.2f} PLN")
     elif 6<what_stage<13:
         if private =="yes":
             del child["public_school"]
             del teen["public_school"]
-            print(calc_newborn()+calc_toddler()+calc_older_toddler()+calc_preschool()+calc_child()+calc_teen())
+            print(f"Total cost with inflation throught years until 18: {calc_child()+calc_teen():.2f} PLN")
         else:
             del child["private_school"]
             del teen["private_school"]
-            print(calc_child()+calc_teen())
+            print(f"Total cost with inflation throught years until 18: {calc_child()+calc_teen():.2f} PLN")
     elif 12<what_stage<19:
         if private =="yes":
             del teen["public_school"]
-            print(calc_teen())
+            print(f"Total cost with inflation throught years until 18: {calc_teen():.2f} PLN")
         else:
             del teen["private_school"]
-            print(calc_teen())               
+            print(f"Total cost with inflation throught years until 18: {calc_teen():.2f} PLN")              
 elif stage_of_child == "no":
     if private =="yes":
             del preschool["public_preschool"]
             del child["public_school"]
             del teen["public_school"]
-            print(f'Total: {calc_newborn()+calc_toddler()+calc_older_toddler()+calc_preschool()+calc_child()+calc_teen()}')
+            print(f"Total cost with inflation throught years until 18: {calc_newborn()+calc_toddler()+calc_older_toddler()+calc_preschool()+calc_child()+calc_teen():.2f} PLN")
+
     else:
             del preschool["private_preschool"]
             del child["private_school"]
             del teen["private_school"]
-            print(calc_newborn()+calc_toddler()+calc_older_toddler()+calc_preschool()+calc_child()+calc_teen())
+            print(f"Total cost with inflation throught years until 18: {calc_newborn()+calc_toddler()+calc_older_toddler()+calc_preschool()+calc_child()+calc_teen():.2f} PLN")
+
            
         
-
 
 
     

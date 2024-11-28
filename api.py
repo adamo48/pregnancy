@@ -3,8 +3,7 @@ import json
 import datetime
 
 def main():
-     list_url= get_url()
-     print(get_inflation(list_url))
+     print(get_inflation(get_url()))
 
 def get_url():
     year = datetime.datetime.now()
@@ -19,10 +18,6 @@ def get_url():
         
     return list_url
     
-headers = {'X-ClientId': 'qSWq2WGJXOVsxXFcn8IJ8DYobLAbEMC73IBynhwf3RM='}
-params = {
-    'format': 'json',  # Format odpowiedzi
-}
 def get_inflation(list_url):
     another_list = []
     for url in list_url:
@@ -33,9 +28,9 @@ def get_inflation(list_url):
                     t = float(target_row["wartosc"])-100
                     another_list.append(t)
             else:
-                 return("Błąd strony")        
+                 return("Error")        
         else:
-            return("Nie znaleziono wskaźnika.")    
+            return("Couldn't find the indicator. Try again later.")    
     return(sum(another_list)/10)
 if __name__ == "__main__":
      main()    
