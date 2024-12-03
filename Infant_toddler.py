@@ -1,5 +1,4 @@
 import requests
-import json
 import datetime
 
 def get_url():
@@ -28,11 +27,12 @@ def get_inflation(list_years_url):
                  return("Error")        
         else:
             return("Couldn't find the indicator. Try again later.")    
-    return(sum(list_url)/10)
+    inflation = (sum(list_url)/10)
+    inflation = float(inflation/100)
+    return inflation
 
 inflation = get_inflation(get_url())
-inflation = float(inflation)/100
-print(inflation)
+
 class Child_budget:
     def __init__(self, stage):
         self.stage = stage
