@@ -42,7 +42,7 @@ def cost_ginecologist():
         elif what_kind_prenatal_care == "no":
             cost_nfz = 0
             return cost_nfz
-        print("Incorrect. Try again.")
+        print("Incorrect. Try again.")    
      
     #ciaza na medicover, wiecej pieniedzy, ale bardziej rozbudowany
     #na NFZ za darmo przy prawidlowym przebiegu
@@ -136,7 +136,9 @@ def get_inflation(list_years_url):
             else:
                  return("Error")        
         else:
-            raise ValueError("Couldn't find the indicator. Try again later.")    
+            inflation = 0
+            return f"Couldn't reach the indicator. All calculations will be made with inflation = {inflation}. To reach the indicator try again."
+             
     inflation = (sum(list_url)/10)
     inflation = float(inflation/100)
     return inflation

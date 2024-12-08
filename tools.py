@@ -3,14 +3,14 @@ from bs4 import BeautifulSoup
 import re
 def get_labour_financing_type():
     while True:
-        labour_financing_type = input('Birth on nfz or private? (priv/nfz): ').lower()
+        labour_financing_type = input('Birth on nfz or private? priv|nfz: ').lower()
         if labour_financing_type in {'priv', 'nfz'}:
             return labour_financing_type
         print('Incorrect. Try again.')
 
 def get_labour_type():
     while True:
-        labour_type = input('Natural birth or cc? (natura/cc)').lower()
+        labour_type = input('Natural birth or cc? natural|cc').lower()
         if labour_type in {'natural','cc'}:
             return labour_type
         print('Incorrect. Try again.')
@@ -25,7 +25,7 @@ def get_user_selection(options):
     selected_options = []
     while True:
         try:
-            choice = int(input("Choose a number/s and press enter. To finish press 0 and enter: "))
+            choice = int(input("Choose a number and press enter. To finish press 0 and enter: "))
             if choice == 0:
                 break
             elif choice in options:
@@ -34,7 +34,7 @@ def get_user_selection(options):
             else:
                 print("Incorrect. Try again.")
         except ValueError:
-            print("Type correct number/s.")
+            print("Type correct number.")
     return selected_options
 
 def calculate_nfz_addons_cost(selected_options, options):
