@@ -4,11 +4,16 @@ from tools import *
 import datetime
 
 def main():
-    print(f"Cost of ginecologist: {cost_ginecologist()} PLN")
-    print(f"Cost of recommended supplements: {cost_supplements()} PLN")
-    print(f"Cost of prenatal test that aren't covered: {cost_prenatal_tests()} PLN")
-    print(f"Cost of labour: {cost_labour()} PLN")
-    print(f"Cost of raising a child: {cost_child_stages()} PLN")
+    ginekolog =  cost_ginecologist()
+    suplementy = cost_supplements()
+    prenatalne_badania = cost_prenatal_tests()
+    ciaza = cost_labour()
+    total_labour = ginekolog + suplementy + prenatalne_badania + ciaza
+    # print(f'Total cost of labour is: {total_labour} PLN')
+    dziecko = cost_child_stages()
+    print(f"Cost of labour & birth: {total_labour} PLN \nCost of raising a child (including pregnancy and labour): {dziecko + total_labour} PLN")
+    
+
 def cost_ginecologist():
     # pakiet medyczny sredni koszt
     luxmed="https://www.luxmed.pl/dla-pacjenta/abonamenty/abonamenty-dla-doroslych-i-dzieci/pakiet-kompleksowy-zloty"
@@ -28,7 +33,7 @@ def cost_ginecologist():
     price_medicover = price_medicover.replace('\n',''). replace(' ','').replace('od','').replace('zł','').replace(',','.')
     price_medicover = float(price_medicover)
     while True:
-        what_kind_prenatal_care = input("Do you want to calculate cost of private medical care? yes|no").lower()
+        what_kind_prenatal_care = input("Do you want to calculate cost of private medical care? yes|no: ").lower()
         if what_kind_prenatal_care == "yes":
             print("What kind of package do you choose? \nLux-medium size, you might have to pay a little extra for additional tests/exams. \nMed-should cover almost all your needs, which can be helpful with difficult pregnancy.")
             while True:
@@ -38,7 +43,7 @@ def cost_ginecologist():
                         return cena
                     elif package == 'med':
                         return price_medicover    
-                print("Incorrect. Answear lux or med.")
+                print("Incorrect. Answer lux or med.")
         elif what_kind_prenatal_care == "no":
             cost_nfz = 0
             return cost_nfz
@@ -56,7 +61,14 @@ def cost_prenatal_tests():
     price = price.string
     price = price.replace(',','.').replace(' ','').replace('PLN','')
     price = float(price)
-    return price
+    while True:
+        choice = input('do you want to include cost of NIPT test? yes|no: ').lower()
+        if choice == 'yes':
+            return price
+        elif choice == 'no':
+            return 0
+        print('Incorrect. Try again.')
+    
 
 def cost_supplements():
     iron_ = Supplements(iron)
@@ -77,7 +89,7 @@ def cost_supplements():
     jod_2 = Supplements(jod2)
     jod_2.fetch_price()
     jod_2.price = jod_2.price*6
-    return iron_.price + folic.price + wit.price + dHa.price + jod_1.price + jod_2.price
+    return round(iron_.price + folic.price + wit.price + dHa.price + jod_1.price + jod_2.price, 2)
     # zalecane suplementy
 def cost_labour():
     private_natural_labour_cost = 9015
@@ -142,7 +154,6 @@ def get_inflation(list_years_url):
     inflation = (sum(list_url)/10)
     inflation = float(inflation/100)
     return inflation
-
 inflation = get_inflation(get_url())
 
 def calc_newborn():
@@ -213,8 +224,8 @@ def calc_teen():
     return total_teen
 
 def cost_child_stages():    
-    stage_of_child = input("Do you currently have a child? Type yes|no ").lower()
-    private=input("Do you want to calculate cost of private schools? Type yes|no ").lower()
+    stage_of_child = input("Do you currently have a child? Type yes|no: ").lower()
+    private = input("Do you want to calculate cost of private schools? Type yes|no: ").lower()
     if stage_of_child=="yes":
         what_stage=int(input("Input age of a child in years: "))
         if what_stage<1:
@@ -222,63 +233,63 @@ def cost_child_stages():
                 del preschool["public_preschool"]
                 del child["public_school"]
                 del teen["public_school"]
-                return(f"Total cost with inflation throught years until 18: {calc_newborn()+calc_toddler()+calc_older_toddler()+calc_preschool()+calc_child()+calc_teen():.2f} PLN")
+                return round(calc_newborn()+calc_toddler()+calc_older_toddler()+calc_preschool()+calc_child()+calc_teen(),2)
 
             else:
                 del preschool["private_preschool"]
                 del child["private_school"]
                 del teen["private_school"]
-                return(f"Total cost with inflation throught years until 18: {calc_newborn()+calc_toddler()+calc_older_toddler()+calc_preschool()+calc_child()+calc_teen():.2f} PLN")
+                return round(calc_newborn()+calc_toddler()+calc_older_toddler()+calc_preschool()+calc_child()+calc_teen(),2)
         elif 0<what_stage<4:
             if private =="yes":
                 del preschool["public_preschool"]
                 del child["public_school"]
                 del teen["public_school"]
-                return(f"Total cost with inflation throught years until 18: {calc_older_toddler()+calc_preschool()+calc_child()+calc_teen():.2f} PLN")
+                return round(calc_older_toddler()+calc_preschool()+calc_child()+calc_teen(),2)
             else:
                 del preschool["private_preschool"]
                 del child["private_school"]
                 del teen["private_school"]
-                return(f"Total cost with inflation throught years until 18: {calc_older_toddler()+calc_preschool()+calc_child()+calc_teen():.2f} PLN")
+                return round(calc_older_toddler()+calc_preschool()+calc_child()+calc_teen(),2)
         elif 3<what_stage<7:
             if private =="yes":
                 del preschool["public_preschool"]
                 del child["public_school"]
                 del teen["public_school"]
-                return(f"Total cost with inflation throught years until 18: {calc_preschool()+calc_child()+calc_teen():.2f} PLN")
+                return round(calc_preschool()+calc_child()+calc_teen(),2)
             else:
                 del preschool["private_preschool"]
                 del child["private_school"]
                 del teen["private_school"]
-                return(f"Total cost with inflation throught years until 18: {calc_preschool()+calc_child()+calc_teen():.2f} PLN")
+                return round(calc_preschool()+calc_child()+calc_teen(),2)
         elif 6<what_stage<13:
             if private =="yes":
                 del child["public_school"]
                 del teen["public_school"]
-                return(f"Total cost with inflation throught years until 18: {calc_child()+calc_teen():.2f} PLN")
+                return round(calc_child()+calc_teen(),2)
             else:
                 del child["private_school"]
                 del teen["private_school"]
-                return(f"Total cost with inflation throught years until 18: {calc_child()+calc_teen():.2f} PLN")
+                return round(calc_child()+calc_teen(),2)
         elif 12<what_stage<19:
             if private =="yes":
                 del teen["public_school"]
-                return(f"Total cost with inflation throught years until 18: {calc_teen():.2f} PLN")
+                return round(calc_teen(),2)
             else:
                 del teen["private_school"]
-                return(f"Total cost with inflation throught years until 18: {calc_teen():.2f} PLN")              
+                return round(calc_teen(),2)              
     elif stage_of_child == "no":
         if private =="yes":
                 del preschool["public_preschool"]
                 del child["public_school"]
                 del teen["public_school"]
-                return(f"Total cost with inflation throught years until 18: {calc_newborn()+calc_toddler()+calc_older_toddler()+calc_preschool()+calc_child()+calc_teen():.2f} PLN")
+                return round(calc_newborn()+calc_toddler()+calc_older_toddler()+calc_preschool()+calc_child()+calc_teen(),2)
 
         else:
                 del preschool["private_preschool"]
                 del child["private_school"]
                 del teen["private_school"]
-                return(f"Total cost with inflation throught years until 18: {calc_newborn()+calc_toddler()+calc_older_toddler()+calc_preschool()+calc_child()+calc_teen():.2f} PLN")
+                return round(calc_newborn()+calc_toddler()+calc_older_toddler()+calc_preschool()+calc_child()+calc_teen(),2)
 
            
 

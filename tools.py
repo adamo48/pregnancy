@@ -10,7 +10,7 @@ def get_labour_financing_type():
 
 def get_labour_type():
     while True:
-        labour_type = input('Natural birth or cc? natural|cc').lower()
+        labour_type = input('Natural birth or cc? natural|cc: ').lower()
         if labour_type in {'natural','cc'}:
             return labour_type
         print('Incorrect. Try again.')
