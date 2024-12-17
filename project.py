@@ -146,10 +146,11 @@ def get_inflation(list_years_url):
                     t = float(target_row["wartosc"])-100
                     list_url.append(t)
             else:
-                 return("Error")        
+                 inflation = 0
+                 return inflation        
         else:
             inflation = 0
-            return f"Couldn't reach the indicator. All calculations will be made with inflation = {inflation}. To reach the indicator try again."
+            return inflation
              
     inflation = (sum(list_url)/10)
     inflation = float(inflation/100)
@@ -224,18 +225,39 @@ def calc_teen():
     return total_teen
 
 def cost_child_stages():    
-    stage_of_child = input("Do you currently have a child? Type yes|no: ").lower()
-    private = input("Do you want to calculate cost of private schools? Type yes|no: ").lower()
+    while True:
+        stage_of_child = input("Do you currently have a child? Type yes|no: ").lower()
+        if stage_of_child in ["yes", "no"]:
+            break
+        else:
+            print("Invalid input. Type 'yes' or 'no'.")
+
+    while True:
+        private = input("Do you want to calculate cost of private schools? Type yes|no: ").lower()
+        if private in ["yes", "no"]:
+            break
+        else:
+            print("Invalid input. Type 'yes' or 'no'.")
+
+
     if stage_of_child=="yes":
-        what_stage=int(input("Input age of a child in years: "))
+        while True:
+            try:
+                what_stage=int(input("Input age of a child in years: "))
+                if 0<= what_stage<=18:
+                    break
+                else:
+                    print("Invalid input. Age must be between 0 and 18.")
+            except ValueError:
+                print("Invalid input. Please enter a number for age.")        
+
         if what_stage<1:
             if private =="yes":
                 del preschool["public_preschool"]
                 del child["public_school"]
                 del teen["public_school"]
                 return round(calc_newborn()+calc_toddler()+calc_older_toddler()+calc_preschool()+calc_child()+calc_teen(),2)
-
-            else:
+            elif private == "no":
                 del preschool["private_preschool"]
                 del child["private_school"]
                 del teen["private_school"]
@@ -246,7 +268,7 @@ def cost_child_stages():
                 del child["public_school"]
                 del teen["public_school"]
                 return round(calc_older_toddler()+calc_preschool()+calc_child()+calc_teen(),2)
-            else:
+            elif private == "no":
                 del preschool["private_preschool"]
                 del child["private_school"]
                 del teen["private_school"]
@@ -257,7 +279,7 @@ def cost_child_stages():
                 del child["public_school"]
                 del teen["public_school"]
                 return round(calc_preschool()+calc_child()+calc_teen(),2)
-            else:
+            elif private == "no":
                 del preschool["private_preschool"]
                 del child["private_school"]
                 del teen["private_school"]
@@ -267,7 +289,7 @@ def cost_child_stages():
                 del child["public_school"]
                 del teen["public_school"]
                 return round(calc_child()+calc_teen(),2)
-            else:
+            elif private == "no":
                 del child["private_school"]
                 del teen["private_school"]
                 return round(calc_child()+calc_teen(),2)
@@ -275,7 +297,7 @@ def cost_child_stages():
             if private =="yes":
                 del teen["public_school"]
                 return round(calc_teen(),2)
-            else:
+            elif private == "no":
                 del teen["private_school"]
                 return round(calc_teen(),2)              
     elif stage_of_child == "no":
@@ -284,15 +306,11 @@ def cost_child_stages():
                 del child["public_school"]
                 del teen["public_school"]
                 return round(calc_newborn()+calc_toddler()+calc_older_toddler()+calc_preschool()+calc_child()+calc_teen(),2)
-
-        else:
+        elif private == "no":
                 del preschool["private_preschool"]
                 del child["private_school"]
                 del teen["private_school"]
                 return round(calc_newborn()+calc_toddler()+calc_older_toddler()+calc_preschool()+calc_child()+calc_teen(),2)
-
-           
-
-
+        
 if __name__ == "__main__":
     main()
